@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小陈 | Live Creator & AI Operator</title>
+<meta name="description" content="小陈 — 直播运营 & AI 创作者，3年直播行业经验，擅长团播运营、AI工具与个人IP增长。">
+<meta property="og:title" content="小陈 | Live Creator & AI Operator">
+<meta property="og:description" content="连接直播生态与人工智能，创造数字内容的新增长方式。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑‍💻</text></svg>">
+
+<!-- ===== 预加载首屏关键资源 ===== -->
+<link rel="preload" as="image" href="images/avatar.jpg" fetchpriority="high">
+
+<style>
+/* =========================
+基础
+========================= */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif;
+  background:radial-gradient(circle at 50% 0%,rgba(255,0,60,0.35),transparent 35%),
+    radial-gradient(circle at 10% 80%,rgba(120,0,20,0.25),transparent 40%),
+    linear-gradient(180deg,#050505 0%,#120005 50%,#000000 100%);
+  color:#fff;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;width:500px;height:500px;background:#ff003c;
+  filter:blur(180px);opacity:.25;top:-200px;right:-200px;z-index:-1;pointer-events:none;
+}
+
+/* =========================
+进场动画系统
+========================= */
+.animate-on-scroll{
+  opacity:0;
+  transform:translateY(40px) scale(0.96);
+  transition:opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change:transform,opacity;
+}
+.animate-on-scroll.visible{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.animate-on-scroll.delay-0{transition-delay:0s;}
+.animate-on-scroll.delay-1{transition-delay:0.08s;}
+.animate-on-scroll.delay-2{transition-delay:0.16s;}
+.animate-on-scroll.delay-3{transition-delay:0.24s;}
+.animate-on-scroll.delay-4{transition-delay:0.32s;}
+.animate-on-scroll.delay-5{transition-delay:0.40s;}
+.animate-on-scroll.delay-6{transition-delay:0.48s;}
+.animate-on-scroll.delay-7{transition-delay:0.56s;}
+.animate-on-scroll.delay-8{transition-delay:0.64s;}
+
+/* =========================
+导航（固定）
+========================= */
+.nav{
+  position:fixed;top:0;left:0;width:100%;height:72px;display:flex;
+  align-items:center;justify-content:space-between;padding:0 8%;
+  background:rgba(10,10,10,0.4);backdrop-filter:blur(25px);z-index:100;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:4px;}
+.nav nav{display:flex;gap:35px;}
+.nav a{text-decoration:none;color:rgba(255,255,255,0.7);font-size:14px;transition:color .3s;letter-spacing:1px;}
+.nav a:hover{color:#fff;}
+.mobile-btn{display:none;font-size:28px;color:#fff;cursor:pointer;user-select:none;}
+
+/* =========================
+首页 Hero — 全屏沉浸式
+========================= */
+.hero{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  padding:120px 20px 40px;
+}
+
+/* 背景头像层（全屏 + 模糊） */
+.hero-bg-avatar{
+  position:absolute;
+  top:-10%;
+  left:-10%;
+  width:120%;
+  height:120%;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.hero-bg-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 30%;
+  filter:blur(8px) saturate(0.8);
+  opacity:0.2;
+  transform:scale(1.02);
+  transition:transform 0.3s ease;
+}
+/* 背景暗色遮罩 */
+.hero-overlay{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  z-index:1;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+}
+/* 前景内容 */
+.hero-inner{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+  padding:0 20px;
+}
+
+/* 头像小圈（保留装饰，但改为极小尺寸） */
+.avatar-wrap{
+  width:80px;
+  height:80px;
+  margin:0 auto 30px auto;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.3);
+  padding:4px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  animation:floating 5s infinite ease-in-out;
+}
+.avatar-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+/* 标题 — 更大气 */
+.hero .name{
+  font-size:100px;
+  letter-spacing:-6px;
+  font-weight:300;
+  background:linear-gradient(135deg, #ffffff 0%, #ff3b5c 60%, #ff6b8a 100%);
+  -webkit-background-clip:text;
+  color:transparent;
+  margin-bottom:10px;
+  line-height:1.05;
+}
+
+/* 副标题 */
+.hero .role{
+  font-size:28px;
+  font-weight:300;
+  letter-spacing:6px;
+  color:rgba(255,255,255,0.7);
+  margin-top:10px;
+  text-transform:uppercase;
+}
+.hero .role span{
+  color:#ff3b5c;
+  font-weight:400;
+}
+
+/* 装饰分隔线 */
+.hero-divider{
+  width:80px;
+  height:2px;
+  margin:25px auto 25px auto;
+  background:linear-gradient(90deg, transparent, #ff3b5c, transparent);
+  border-radius:2px;
+}
+
+/* 标语 */
+.hero .slogan{
+  font-size:18px;
+  line-height:2;
+  color:rgba(255,255,255,0.5);
+  letter-spacing:2px;
+  font-weight:300;
+  margin-top:5px;
+}
+
+/* 底部小数据标签（替代原来的 tags） */
+.hero-stats{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  margin-top:40px;
+  flex-wrap:wrap;
+}
+.hero-stats .stat-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.hero-stats .stat-number{
+  font-size:28px;
+  font-weight:300;
+  color:#fff;
+  letter-spacing:1px;
+}
+.hero-stats .stat-label{
+  font-size:12px;
+  color:rgba(255,255,255,0.35);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+
+/* CTA 按钮 — 透明边框风格 */
+.main-btn{
+  display:inline-block;
+  margin-top:45px;
+  padding:16px 55px;
+  border-radius:50px;
+  background:transparent;
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.3);
+  transition:.4s;
+  letter-spacing:3px;
+  font-size:14px;
+  backdrop-filter:blur(10px);
+}
+.main-btn:hover{
+  background:rgba(255,255,255,0.1);
+  border-color:#ff3b5c;
+  transform:translateY(-3px);
+  box-shadow:0 20px 60px rgba(255,0,60,0.15);
+}
+
+/* =========================
+其他模块保持不变
+========================= */
+section{padding:120px 8%;}
+section h2{font-size:60px;letter-spacing:-3px;margin-bottom:60px;color:#fff;}
+
+.glass-box,.number-card,.project-card{
+  background:rgba(255,255,255,.65);backdrop-filter:blur(25px);
+  border:1px solid rgba(255,255,255,.2);box-shadow:0 30px 80px rgba(0,0,0,.08);
+  border-radius:35px;color:#222;
+}
+
+.numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:25px;}
+.number-card{padding:40px;text-align:center;}
+.number-card h3{font-size:55px;color:#111;}
+.number-card p{color:#555;margin-top:15px;}
+
+.glass-box{padding:45px;line-height:2;color:#333;}
+
+.skill-list{display:flex;gap:15px;flex-wrap:wrap;}
+.skill-list span{padding:12px 25px;background:rgba(255,255,255,.8);border-radius:30px;color:#222;backdrop-filter:blur(10px);}
+
+.experience-list{display:grid;gap:30px;}
+.experience-card{padding:40px;}
+.experience-card h3{font-size:28px;margin-bottom:20px;color:#111;}
+.experience-card h4{color:#555;margin-bottom:20px;font-weight:400;}
+.experience-card p{color:#444;line-height:1.8;}
+
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.project-card{padding:35px;transition:.5s;transform-style:preserve-3d;overflow:hidden;cursor:pointer;}
+.project-card:hover{transform:translateY(-20px) rotateX(5deg) rotateY(-5deg);}
+.project-cover{height:180px;border-radius:25px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;letter-spacing:2px;color:#888;overflow:hidden;pointer-events:none;}
+.project-cover img{width:100%;height:100%;object-fit:cover;}
+.project-card span{display:inline-block;margin-top:25px;padding:8px 18px;background:#f5f5f5;border-radius:30px;font-size:13px;color:#222;pointer-events:none;}
+.project-card h3{font-size:28px;margin:20px 0;color:#111;pointer-events:none;}
+.project-card p{color:#555;line-height:1.6;pointer-events:none;}
+.project-number{margin-top:25px;font-size:25px;font-weight:700;color:#111;pointer-events:none;}
+.detail-btn{margin-top:25px;border:none;background:#111;color:#fff;padding:12px 25px;border-radius:30px;cursor:pointer;font-size:14px;transition:.3s;display:inline-block;text-decoration:none;pointer-events:auto;}
+.detail-btn:hover{background:#333;}
+.project-detail{max-height:0;opacity:0;overflow:hidden;transition:max-height 0.5s ease,opacity 0.4s ease,margin 0.3s ease;margin-top:0;line-height:2;color:#444;}
+.project-card.active .project-detail{max-height:400px;opacity:1;margin-top:25px;}
+
+.contact-box{font-size:20px;line-height:2.2;color:#222;}
+.contact-box p{margin:8px 0;}
+.copy-phone{cursor:pointer;transition:.2s;}
+.copy-phone:hover{color:#ff3b5c;}
+
+footer{text-align:center;padding:40px;color:#999;}
+
+@keyframes floating{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+/* =========================
+移动端适配
+========================= */
+@media(max-width:768px){
+  .nav{padding:0 25px;}
+  .nav nav{position:absolute;top:72px;left:0;width:100%;
+    background:radial-gradient(circle at 80% 10%,rgba(255,0,60,0.35),transparent 35%),
+    linear-gradient(135deg,#050505,#250008);
+    display:none;flex-direction:column;padding:30px;gap:20px;border-bottom:1px solid rgba(255,255,255,.1);}
+  .nav nav.active{display:flex;}
+  .mobile-btn{display:block;}
+
+  .hero .name{font-size:48px;letter-spacing:-3px;}
+  .hero .role{font-size:18px;letter-spacing:4px;}
+  .hero .slogan{font-size:14px;}
+  .hero-stats{gap:20px;}
+  .hero-stats .stat-number{font-size:20px;}
+  .hero-stats .stat-label{font-size:10px;}
+  .avatar-wrap{width:60px;height:60px;margin-bottom:20px;}
+  .main-btn{padding:14px 35px;font-size:12px;}
+
+  .numbers{grid-template-columns:repeat(2,1fr);}
+  .project-grid{grid-template-columns:1fr;}
+  section h2{font-size:42px;}
+  section{padding:80px 5%;}
+  section h2{margin-bottom:40px;}
+}
+
+/* AI助手样式 */
+#ai-btn{position:fixed;right:22px;bottom:22px;z-index:9999;background:#111;color:#fff;border:0;border-radius:50px;padding:14px 22px;font-size:16px;box-shadow:0 10px 30px rgba(0,0,0,0.5);cursor:pointer;transition:.3s;}
+#ai-btn:hover{background:#222;transform:scale(1.05);}
+#ai-box{display:none;position:fixed;right:20px;bottom:80px;width:340px;height:460px;background:rgba(20,20,20,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:24px;z-index:9999;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden;flex-direction:column;}
+#ai-box[style*="block"]{display:flex !important;}
+#ai-head{padding:16px 20px;font-weight:700;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0;background:rgba(0,0,0,.3);}
+#ai-chat{flex:1;overflow:auto;padding:15px;font-size:14px;display:flex;flex-direction:column;gap:6px;}
+#ai-input{display:flex;padding:12px;gap:8px;border-top:1px solid rgba(255,255,255,.1);flex-shrink:0;background:rgba(0,0,0,.2);flex-wrap:wrap;}
+#ai-input input{flex:1;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;outline:none;font-size:14px;min-width:120px;}
+#ai-input input::placeholder{color:rgba(255,255,255,.4);}
+#ai-input button{border:0;border-radius:12px;padding:0 18px;background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(10px);cursor:pointer;font-size:14px;transition:.2s;}
+#ai-input button:hover{background:rgba(255,255,255,.25);}
+.quick-questions{display:flex;gap:8px;padding:8px 12px 4px 12px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.05);}
+.quick-questions button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 14px;color:rgba(255,255,255,.6);font-size:12px;cursor:pointer;transition:.2s;}
+.quick-questions button:hover{background:rgba(255,255,255,.15);color:#fff;}
+.msg{padding:8px 14px;border-radius:16px;background:rgba(255,255,255,.08);line-height:1.6;word-break:break-word;color:#eee;max-width:90%;}
+.msg:first-child{background:rgba(255,255,255,.15);color:#fff;}
+</style>
+
+</head>
+
+<body>
+
+<header class="nav">
+  <div class="logo">CHEN</div>
+  <nav>
+    <a href="#about">关于</a>
+    <a href="#experience">经历</a>
+    <a href="#projects">作品</a>
+    <a href="#contact">联系</a>
+  </nav>
+  <div class="mobile-btn">☰</div>
+</header>
+
+<!-- ===== 首页 — 全屏沉浸式 ===== -->
+<section class="hero">
+
+  <!-- 背景层：头像模糊大图 -->
+  <div class="hero-bg-avatar" id="bgAvatar">
+    <img src="images/avatar.jpg" alt="小陈背景" id="bgAvatarImg" fetchpriority="high" width="1200" height="1200">
+  </div>
+
+  <!-- 遮罩层 -->
+  <div class="hero-overlay"></div>
+
+  <!-- 前景内容 -->
+  <div class="hero-inner">
+
+    <!-- 小头像圈（装饰保留） -->
+    <div class="avatar-wrap">
+      <img src="images/avatar.jpg" alt="小陈" width="80" height="80" fetchpriority="high">
+    </div>
+
+    <h1 class="name">小陈</h1>
+
+    <p class="role">Live Creator <span>·</span> AI Operator</p>
+
+    <div class="hero-divider"></div>
+
+    <p class="slogan">连接直播生态与人工智能，创造数字内容的新增长方式</p>
+
+    <!-- 底部数据标签 -->
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number">3年</span>
+        <span class="stat-label">直播经验</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">10万</span>
+        <span class="stat-label">最高月流水</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5.5万</span>
+        <span class="stat-label">粉丝增长</span>
+      </div>
+    </div>
+
+    <a href="#projects" class="main-btn">查看作品</a>
+
+  </div>
+</section>
+
+<!-- ===== 数据展示 ===== -->
+<section class="numbers">
+  <div class="number-card animate-on-scroll delay-0"><h3 class="num-count" data-count="3">0</h3><p>直播行业经验</p></div>
+  <div class="number-card animate-on-scroll delay-1"><h3 class="num-count" data-count="100000">0</h3><p>单月最高流水</p></div>
+  <div class="number-card animate-on-scroll delay-2"><h3 class="num-count" data-count="55000">0</h3><p>账号粉丝增长</p></div>
+  <div class="number-card animate-on-scroll delay-3"><h3 class="num-count" data-count="100000">0</h3><p>创业项目盈利</p></div>
+</section>
+
+<!-- ===== 关于我 ===== -->
+<section id="about">
+  <h2 class="animate-on-scroll delay-0">About Me</h2>
+  <div class="glass-box animate-on-scroll delay-1">
+    <p>我是小陈，18岁。<br><br>拥有3年直播行业实战经验，1年以上团播主播经验。<br><br>熟悉直播全流程：主播培养、直播内容设计、用户互动、流量增长。<br><br>擅长Kpop、Hiphop舞蹈，原创编舞以及直播节目效果设计。<br><br>熟悉抖音、快手、Bigo等平台运营，并使用AI工具提升内容效率。</p>
+  </div>
+</section>
+
+<!-- ===== 技能 ===== -->
+<section class="skills-section">
+  <h2 class="animate-on-scroll delay-0">Skills</h2>
+  <div class="skill-list">
+    <span class="animate-on-scroll delay-0">Live Operation</span>
+    <span class="animate-on-scroll delay-1">Content Growth</span>
+    <span class="animate-on-scroll delay-2">AI Tools</span>
+    <span class="animate-on-scroll delay-3">IP Building</span>
+    <span class="animate-on-scroll delay-4">PS Design</span>
+    <span class="animate-on-scroll delay-5">Data Analysis</span>
+  </div>
+</section>
+
+<!-- ===== 工作经历 ===== -->
+<section id="experience">
+  <h2 class="animate-on-scroll delay-0">Experience</h2>
+  <div class="experience-list">
+    <div class="experience-card glass-box animate-on-scroll delay-0">
+      <h3>重庆星丹文化传媒有限公司</h3>
+      <h4>主播 &amp; 运营<br>2023.11 - 至今</h4>
+      <p>负责团播直播内容输出，直播间气氛打造以及用户互动。<br><br>负责账号运营：<br>内容策划<br>流量测试<br>粉丝增长<br>用户维护<br><br>业绩：<br>单月最高流水 ¥100,000<br>月均流水 ¥30,000<br>单日最高流水 ¥8,000</p>
+    </div>
+    <div class="experience-card glass-box animate-on-scroll delay-1">
+      <h3>自媒体账号运营</h3>
+      <h4>2023</h4>
+      <p>独立完成账号定位、内容策划、拍摄、剪辑、发布以及数据分析。<br><br>2个月：<br>账号增长至5.5万粉丝。</p>
+    </div>
+    <div class="experience-card glass-box animate-on-scroll delay-2">
+      <h3>信息差创业项目</h3>
+      <h4>2022</h4>
+      <p>发现市场机会，独立完成项目运营。<br><br>2个月盈利近 ¥100,000。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 项目作品 ===== -->
+<section id="projects">
+  <h2 class="animate-on-scroll delay-0">Featured Projects</h2>
+  <div class="project-grid">
+    <div class="project-card glass-box animate-on-scroll delay-0" onclick="this.classList.toggle('active')">
+      <div class="project-cover"><img src="images/project1.jpg" alt="直播增长运营系统" loading="lazy" width="600" height="400" onerror="this.style.display='none';this.parentElement.innerHTML='📺 直播增长运营'"></div>
+      <span>直播运营</span>
+      <h3>直播增长运营系统</h3>
+      <p>从账号定位、内容设计、直播运营到商业转化，打造完整增长体系。</p>
+      <div class="project-number">¥100,000<br>最高月流水</div>
+      <a href="project1.html" class="detail-btn">VIEW CASE →</a>
+      <div class="project-detail"><h4>项目职责</h4><p>主播运营<br>直播策划<br>数据分析<br>用户增长</p><h4>成果</h4><p>单月最高流水10万元。</p></div>
+    </div>
+    <div class="project-card glass-box animate-on-scroll delay-1" onclick="this.classList.toggle('active')">
+      <div class="project-cover"><img src="images/project2.jpg" alt="海外直播生态运营" loading="lazy" width="600" height="400" onerror="this.style.display='none';this.parentElement.innerHTML='🌍 海外直播生态'"></div>
+      <span>海外直播</span>
+      <h3>海外直播生态运营</h3>
+      <p>研究海外直播平台玩法，主播培养和用户增长。</p>
+      <div class="project-number">GLOBAL<br>LIVE OPERATION</div>
+      <a href="project2.html" class="detail-btn">VIEW CASE →</a>
+      <div class="project-detail"><h4>平台</h4><p>Bigo Live</p><h4>能力</h4><p>主播管理<br>活动策划<br>直播运营<br>用户增长</p></div>
+    </div>
+    <div class="project-card glass-box animate-on-scroll delay-2" onclick="this.classList.toggle('active')">
+      <div class="project-cover"><img src="images/project3.jpg" alt="个人IP增长项目" loading="lazy" width="600" height="400" onerror="this.style.display='none';this.parentElement.innerHTML='🧠 个人IP增长'"></div>
+      <span>个人IP</span>
+      <h3>自媒体增长项目</h3>
+      <p>从0开始打造账号，完成内容增长和粉丝积累。</p>
+      <div class="project-number">55K+<br>粉丝</div>
+      <a href="project3.html" class="detail-btn">VIEW CASE →</a>
+      <div class="project-detail"><h4>负责内容</h4><p>账号定位<br>选题策划<br>视频制作<br>数据复盘</p><h4>成果</h4><p>2个月达到5.5万粉丝。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 联系方式 ===== -->
+<section id="contact">
+  <h2 class="animate-on-scroll delay-0">Contact</h2>
+  <div class="contact-box glass-box animate-on-scroll delay-1">
+    <p>小陈</p>
+    <p class="copy-phone" onclick="copyPhone()">📞 18198492700 (点击复制)</p>
+    <p>主播 / 直播运营 / 新媒体运营</p>
+    <p>揭阳 · 广州 · 深圳 · 杭州</p>
+  </div>
+</section>
+
+<footer class="animate-on-scroll delay-0">© 2026 Chen Portfolio</footer>
+
+<!-- ===== AI助手 ===== -->
+<button id="ai-btn">🤖 CHEN AI</button>
+<div id="ai-box">
+  <div id="ai-head">🤖 CHEN AI</div>
+  <div id="ai-chat"><div class="msg">请问想知道什么？</div></div>
+  <div class="quick-questions">
+    <button onclick="quickAsk('直播经验')">📊 直播经验</button>
+    <button onclick="quickAsk('AI工具')">🤖 AI工具</button>
+    <button onclick="quickAsk('联系方式')">📞 联系方式</button>
+  </div>
+  <div id="ai-input">
+    <input id="ai-text" placeholder="输入问题...">
+    <button onclick="askESSPSEEK()">发送</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// 1. 进场动画（Intersection Observer — 高性能）
+// ============================================================
+const animateElements = document.querySelectorAll('.animate-on-scroll');
+const animationObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+animateElements.forEach(el => {
+  if (!el.classList.contains('visible')) {
+    animationObserver.observe(el);
+  }
+});
+
+// ============================================================
+// 2. 首屏背景头像 — 鼠标视差
+// ============================================================
+const bgAvatar = document.getElementById('bgAvatar');
+const bgImg = document.getElementById('bgAvatarImg');
+
+document.querySelector('.hero').addEventListener('mousemove', (e) => {
+  const rect = document.querySelector('.hero').getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  bgImg.style.transform = `scale(1.05) translate(${x * 20}px, ${y * 20}px)`;
+});
+
+document.querySelector('.hero').addEventListener('mouseleave', () => {
+  bgImg.style.transform = 'scale(1.02) translate(0,0)';
+});
+
+// ============================================================
+// 3. 移动端菜单
+// ============================================================
+const mobileBtn = document.querySelector('.mobile-btn');
+const navMenu = document.querySelector('.nav nav');
+mobileBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  navMenu.classList.toggle('active');
+  this.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav')) {
+    navMenu.classList.remove('active');
+    mobileBtn.textContent = '☰';
+  }
+});
+
+// ============================================================
+// 4. 数字滚动
+// ============================================================
+function initNumberScroll(selector) {
+  const numbers = document.querySelectorAll(selector);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count);
+        if (isNaN(target) || target === 0) { el.textContent = target; return; }
+        let current = 0;
+        const duration = 1200;
+        const stepTime = 20;
+        const steps = duration / stepTime;
+        const increment = target / steps;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            el.textContent = target >= 1000 ? target.toLocaleString() : target;
+            clearInterval(timer);
+          } else {
+            el.textContent = Math.floor(current) >= 1000 ? Math.floor(current).toLocaleString() : Math.floor(current);
+          }
+        }, stepTime);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  numbers.forEach(n => observer.observe(n));
+}
+initNumberScroll('.num-count');
+
+// ============================================================
+// 5. AI助手
+// ============================================================
+const aiBtn = document.getElementById('ai-btn');
+const aiBox = document.getElementById('ai-box');
+aiBtn.onclick = () => {
+  const isOpen = aiBox.style.display === 'block';
+  aiBox.style.display = isOpen ? 'none' : 'block';
+};
+
+function quickAsk(text) {
+  document.getElementById('ai-text').value = text;
+  askESSPSEEK();
+}
+
+async function askESSPSEEK() {
+  const input = document.getElementById('ai-text');
+  const chat = document.getElementById('ai-chat');
+  const q = input.value.trim();
+  if (!q) return;
+  chat.innerHTML += `<div class="msg">你：${q}</div>`;
+  input.value = '';
+  let reply = '收到你的问题啦！我是小陈的AI助手，目前还在学习更多关于直播和AI的知识。你可以试试问"直播运营"或"AI工具"～';
+  const lower = q.toLowerCase();
+  if (lower.includes('直播') || lower.includes('运营') || lower.includes('经验')) {
+    reply = '小陈有3年直播经验，擅长团播运营、主播培养和流量增长，最高单月流水10万元！可以看看"作品"板块的案例。';
+  } else if (lower.includes('ai') || lower.includes('人工智能') || lower.includes('工具')) {
+    reply = '小陈擅长用AI工具提升内容效率，包括AI文案、AI辅助剪辑、数据分析和自动化运营。';
+  } else if (lower.includes('项目') || lower.includes('作品')) {
+    reply = '小陈做过直播增长系统、海外直播运营和个人IP项目，点击导航栏"作品"即可查看详情。';
+  } else if (lower.includes('联系') || lower.includes('电话') || lower.includes('微信') || lower.includes('方式')) {
+    reply = '你可以通过页面底部的"联系"板块找到小陈的电话 📞 18198492700，或直接在此留言。';
+  } else if (lower.includes('你好') || lower.includes('嗨') || lower.includes('hi')) {
+    reply = '你好呀！我是小陈的AI分身，有什么关于直播、AI或项目的问题尽管问我～';
+  }
+  chat.innerHTML += `<div class="msg">AI：${reply}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+document.getElementById('ai-text').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') askESSPSEEK();
+});
+
+// ============================================================
+// 6. 复制电话
+// ============================================================
+function copyPhone() {
+  navigator.clipboard.writeText('18198492700').then(() => {
+    alert('✅ 号码已复制！');
+  }).catch(() => {
+    const input = document.createElement('input');
+    input.value = '18198492700';
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    alert('✅ 号码已复制！');
+  });
+}
+
+// ============================================================
+// 7. 返回顶部按钮（带 requestAnimationFrame 节流）
+// ============================================================
+const topBtn = document.getElementById('topBtn');
+if (topBtn) {
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        topBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+// ============================================================
+// 8. 封面图占位
+// ============================================================
+document.querySelectorAll('.project-cover').forEach(cover => {
+  if (!cover.querySelector('img')) {
+    cover.style.background = '#2a2a2a';
+    cover.style.color = '#888';
+  }
+});
+</script>
+
+</body>
+
+</html>
