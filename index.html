@@ -10,8 +10,6 @@
 <meta property="og:description" content="连接直播生态与人工智能，创造数字内容的新增长方式。">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑‍💻</text></svg>">
-
-<!-- ===== 预加载首屏关键资源 ===== -->
 <link rel="preload" as="image" href="images/avatar.jpg" fetchpriority="high">
 
 <style>
@@ -33,7 +31,7 @@ body::before{
 }
 
 /* =========================
-进场动画系统
+进场动画
 ========================= */
 .animate-on-scroll{
   opacity:0;
@@ -57,7 +55,7 @@ body::before{
 .animate-on-scroll.delay-8{transition-delay:0.64s;}
 
 /* =========================
-导航（固定）
+导航
 ========================= */
 .nav{
   position:fixed;top:0;left:0;width:100%;height:72px;display:flex;
@@ -72,7 +70,7 @@ body::before{
 .mobile-btn{display:none;font-size:28px;color:#fff;cursor:pointer;user-select:none;}
 
 /* =========================
-首页 Hero — 全屏沉浸式
+Hero
 ========================= */
 .hero{
   height:100vh;
@@ -84,8 +82,6 @@ body::before{
   overflow:hidden;
   padding:120px 20px 40px;
 }
-
-/* 背景头像层（全屏 + 模糊） */
 .hero-bg-avatar{
   position:absolute;
   top:-10%;
@@ -106,23 +102,18 @@ body::before{
   transform:scale(1.02);
   transition:transform 0.3s ease;
 }
-/* 背景暗色遮罩 */
 .hero-overlay{
   position:absolute;
   top:0;left:0;width:100%;height:100%;
   z-index:1;
-  background:
-    radial-gradient(ellipse at 50% 30%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+  background:radial-gradient(ellipse at 50% 30%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
 }
-/* 前景内容 */
 .hero-inner{
   position:relative;
   z-index:2;
   max-width:900px;
   padding:0 20px;
 }
-
-/* 头像小圈（保留装饰，但改为极小尺寸） */
 .avatar-wrap{
   width:80px;
   height:80px;
@@ -140,8 +131,6 @@ body::before{
   object-fit:cover;
   border-radius:50%;
 }
-
-/* 标题 — 更大气 */
 .hero .name{
   font-size:100px;
   letter-spacing:-6px;
@@ -152,8 +141,6 @@ body::before{
   margin-bottom:10px;
   line-height:1.05;
 }
-
-/* 副标题 */
 .hero .role{
   font-size:28px;
   font-weight:300;
@@ -162,12 +149,7 @@ body::before{
   margin-top:10px;
   text-transform:uppercase;
 }
-.hero .role span{
-  color:#ff3b5c;
-  font-weight:400;
-}
-
-/* 装饰分隔线 */
+.hero .role span{color:#ff3b5c;font-weight:400;}
 .hero-divider{
   width:80px;
   height:2px;
@@ -175,8 +157,6 @@ body::before{
   background:linear-gradient(90deg, transparent, #ff3b5c, transparent);
   border-radius:2px;
 }
-
-/* 标语 */
 .hero .slogan{
   font-size:18px;
   line-height:2;
@@ -185,8 +165,6 @@ body::before{
   font-weight:300;
   margin-top:5px;
 }
-
-/* 底部小数据标签（替代原来的 tags） */
 .hero-stats{
   display:flex;
   justify-content:center;
@@ -212,8 +190,6 @@ body::before{
   text-transform:uppercase;
   margin-top:4px;
 }
-
-/* CTA 按钮 — 透明边框风格 */
 .main-btn{
   display:inline-block;
   margin-top:45px;
@@ -236,7 +212,7 @@ body::before{
 }
 
 /* =========================
-其他模块保持不变
+通用
 ========================= */
 section{padding:120px 8%;}
 section h2{font-size:60px;letter-spacing:-3px;margin-bottom:60px;color:#fff;}
@@ -247,15 +223,30 @@ section h2{font-size:60px;letter-spacing:-3px;margin-bottom:60px;color:#fff;}
   border-radius:35px;color:#222;
 }
 
+/* 数据卡片 — 数字颜色加强 */
 .numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:25px;}
-.number-card{padding:40px;text-align:center;}
-.number-card h3{font-size:55px;color:#111;}
-.number-card p{color:#555;margin-top:15px;}
+.number-card{padding:40px;text-align:center;transition:transform .3s;}
+.number-card:hover{transform:translateY(-6px);}
+.number-card h3{font-size:55px;color:#0a0a0a;font-weight:700;}
+.number-card p{color:#555;margin-top:15px;font-weight:400;}
 
 .glass-box{padding:45px;line-height:2;color:#333;}
 
+/* 技能标签 — 加图标 */
 .skill-list{display:flex;gap:15px;flex-wrap:wrap;}
-.skill-list span{padding:12px 25px;background:rgba(255,255,255,.8);border-radius:30px;color:#222;backdrop-filter:blur(10px);}
+.skill-list span{
+  padding:12px 28px;
+  background:rgba(255,255,255,.8);
+  border-radius:30px;
+  color:#222;
+  backdrop-filter:blur(10px);
+  font-size:14px;
+  transition:all .3s;
+}
+.skill-list span:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
 
 .experience-list{display:grid;gap:30px;}
 .experience-card{padding:40px;}
@@ -263,19 +254,89 @@ section h2{font-size:60px;letter-spacing:-3px;margin-bottom:60px;color:#fff;}
 .experience-card h4{color:#555;margin-bottom:20px;font-weight:400;}
 .experience-card p{color:#444;line-height:1.8;}
 
+/* 项目卡片 — 优化点击交互 */
 .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
-.project-card{padding:35px;transition:.5s;transform-style:preserve-3d;overflow:hidden;cursor:pointer;}
-.project-card:hover{transform:translateY(-20px) rotateX(5deg) rotateY(-5deg);}
-.project-cover{height:180px;border-radius:25px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;letter-spacing:2px;color:#888;overflow:hidden;pointer-events:none;}
+.project-card{
+  padding:35px;
+  transition:.5s;
+  transform-style:preserve-3d;
+  overflow:hidden;
+  cursor:default;
+  position:relative;
+}
+.project-card:hover{
+  transform:translateY(-20px) rotateX(5deg) rotateY(-5deg);
+}
+.project-cover{
+  height:180px;
+  border-radius:25px;
+  background:#1a1a1a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:2px;
+  color:#888;
+  overflow:hidden;
+}
 .project-cover img{width:100%;height:100%;object-fit:cover;}
-.project-card span{display:inline-block;margin-top:25px;padding:8px 18px;background:#f5f5f5;border-radius:30px;font-size:13px;color:#222;pointer-events:none;}
-.project-card h3{font-size:28px;margin:20px 0;color:#111;pointer-events:none;}
-.project-card p{color:#555;line-height:1.6;pointer-events:none;}
-.project-number{margin-top:25px;font-size:25px;font-weight:700;color:#111;pointer-events:none;}
-.detail-btn{margin-top:25px;border:none;background:#111;color:#fff;padding:12px 25px;border-radius:30px;cursor:pointer;font-size:14px;transition:.3s;display:inline-block;text-decoration:none;pointer-events:auto;}
-.detail-btn:hover{background:#333;}
-.project-detail{max-height:0;opacity:0;overflow:hidden;transition:max-height 0.5s ease,opacity 0.4s ease,margin 0.3s ease;margin-top:0;line-height:2;color:#444;}
-.project-card.active .project-detail{max-height:400px;opacity:1;margin-top:25px;}
+.project-card span{
+  display:inline-block;
+  margin-top:25px;
+  padding:8px 18px;
+  background:#f5f5f5;
+  border-radius:30px;
+  font-size:13px;
+  color:#222;
+}
+.project-card h3{font-size:28px;margin:20px 0;color:#111;}
+.project-card p{color:#555;line-height:1.6;}
+.project-number{margin-top:25px;font-size:25px;font-weight:700;color:#111;}
+
+/* 展开按钮 — 改为卡片右下角小箭头 */
+.expand-toggle{
+  display:inline-block;
+  margin-top:20px;
+  color:#999;
+  font-size:13px;
+  cursor:pointer;
+  transition:.3s;
+  user-select:none;
+  border-bottom:1px dashed #ddd;
+  padding-bottom:2px;
+}
+.expand-toggle:hover{color:#333;}
+
+.detail-btn{
+  margin-top:25px;
+  border:none;
+  background:#111;
+  color:#fff;
+  padding:12px 25px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:14px;
+  transition:.3s;
+  display:inline-block;
+  text-decoration:none;
+}
+.detail-btn:hover{background:#333;transform:translateY(-2px);}
+
+.project-detail{
+  max-height:0;
+  opacity:0;
+  overflow:hidden;
+  transition:max-height 0.5s ease,opacity 0.4s ease,margin 0.3s ease;
+  margin-top:0;
+  line-height:2;
+  color:#444;
+}
+.project-card.active .project-detail{
+  max-height:400px;
+  opacity:1;
+  margin-top:25px;
+}
 
 .contact-box{font-size:20px;line-height:2.2;color:#222;}
 .contact-box p{margin:8px 0;}
@@ -287,7 +348,7 @@ footer{text-align:center;padding:40px;color:#999;}
 @keyframes floating{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* =========================
-移动端适配
+移动端
 ========================= */
 @media(max-width:768px){
   .nav{padding:0 25px;}
@@ -308,13 +369,17 @@ footer{text-align:center;padding:40px;color:#999;}
   .main-btn{padding:14px 35px;font-size:12px;}
 
   .numbers{grid-template-columns:repeat(2,1fr);}
+  .number-card h3{font-size:40px;}
   .project-grid{grid-template-columns:1fr;}
   section h2{font-size:42px;}
   section{padding:80px 5%;}
   section h2{margin-bottom:40px;}
+  .expand-toggle{font-size:12px;padding:6px 0;}
 }
 
-/* AI助手样式 */
+/* =========================
+AI助手
+========================= */
 #ai-btn{position:fixed;right:22px;bottom:22px;z-index:9999;background:#111;color:#fff;border:0;border-radius:50px;padding:14px 22px;font-size:16px;box-shadow:0 10px 30px rgba(0,0,0,0.5);cursor:pointer;transition:.3s;}
 #ai-btn:hover{background:#222;transform:scale(1.05);}
 #ai-box{display:none;position:fixed;right:20px;bottom:80px;width:340px;height:460px;background:rgba(20,20,20,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:24px;z-index:9999;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden;flex-direction:column;}
@@ -348,55 +413,30 @@ footer{text-align:center;padding:40px;color:#999;}
   <div class="mobile-btn">☰</div>
 </header>
 
-<!-- ===== 首页 — 全屏沉浸式 ===== -->
+<!-- ===== Hero ===== -->
 <section class="hero">
-
-  <!-- 背景层：头像模糊大图 -->
   <div class="hero-bg-avatar" id="bgAvatar">
-    <img src="images/avatar.jpg" alt="小陈背景" id="bgAvatarImg" fetchpriority="high" width="1200" height="1200">
+    <img src="images/avatar.jpg" alt="小陈背景" id="bgAvatarImg" fetchpriority="high" width="1200" height="1200" onerror="this.style.opacity='0'">
   </div>
-
-  <!-- 遮罩层 -->
   <div class="hero-overlay"></div>
-
-  <!-- 前景内容 -->
   <div class="hero-inner">
-
-    <!-- 小头像圈（装饰保留） -->
     <div class="avatar-wrap">
-      <img src="images/avatar.jpg" alt="小陈" width="80" height="80" fetchpriority="high">
+      <img src="images/avatar.jpg" alt="小陈" width="80" height="80" fetchpriority="high" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect fill=%22%23333%22 width=%2280%22 height=%2280%22/%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.35em%22 fill=%22%23999%22 font-size=%2230%22%3E🧑%3C/text%3E%3C/svg%3E'">
     </div>
-
     <h1 class="name">小陈</h1>
-
     <p class="role">Live Creator <span>·</span> AI Operator</p>
-
     <div class="hero-divider"></div>
-
     <p class="slogan">连接直播生态与人工智能，创造数字内容的新增长方式</p>
-
-    <!-- 底部数据标签 -->
     <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-number">3年</span>
-        <span class="stat-label">直播经验</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">10万</span>
-        <span class="stat-label">最高月流水</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">5.5万</span>
-        <span class="stat-label">粉丝增长</span>
-      </div>
+      <div class="stat-item"><span class="stat-number">3年</span><span class="stat-label">直播经验</span></div>
+      <div class="stat-item"><span class="stat-number">10万</span><span class="stat-label">最高月流水</span></div>
+      <div class="stat-item"><span class="stat-number">5.5万</span><span class="stat-label">粉丝增长</span></div>
     </div>
-
     <a href="#projects" class="main-btn">查看作品</a>
-
   </div>
 </section>
 
-<!-- ===== 数据展示 ===== -->
+<!-- ===== 数据 ===== -->
 <section class="numbers">
   <div class="number-card animate-on-scroll delay-0"><h3 class="num-count" data-count="3">0</h3><p>直播行业经验</p></div>
   <div class="number-card animate-on-scroll delay-1"><h3 class="num-count" data-count="100000">0</h3><p>单月最高流水</p></div>
@@ -404,7 +444,7 @@ footer{text-align:center;padding:40px;color:#999;}
   <div class="number-card animate-on-scroll delay-3"><h3 class="num-count" data-count="100000">0</h3><p>创业项目盈利</p></div>
 </section>
 
-<!-- ===== 关于我 ===== -->
+<!-- ===== 关于 ===== -->
 <section id="about">
   <h2 class="animate-on-scroll delay-0">About Me</h2>
   <div class="glass-box animate-on-scroll delay-1">
@@ -416,16 +456,16 @@ footer{text-align:center;padding:40px;color:#999;}
 <section class="skills-section">
   <h2 class="animate-on-scroll delay-0">Skills</h2>
   <div class="skill-list">
-    <span class="animate-on-scroll delay-0">Live Operation</span>
-    <span class="animate-on-scroll delay-1">Content Growth</span>
-    <span class="animate-on-scroll delay-2">AI Tools</span>
-    <span class="animate-on-scroll delay-3">IP Building</span>
-    <span class="animate-on-scroll delay-4">PS Design</span>
-    <span class="animate-on-scroll delay-5">Data Analysis</span>
+    <span class="animate-on-scroll delay-0">🎯 Live Operation</span>
+    <span class="animate-on-scroll delay-1">📈 Content Growth</span>
+    <span class="animate-on-scroll delay-2">🤖 AI Tools</span>
+    <span class="animate-on-scroll delay-3">🧠 IP Building</span>
+    <span class="animate-on-scroll delay-4">🎨 PS Design</span>
+    <span class="animate-on-scroll delay-5">📊 Data Analysis</span>
   </div>
 </section>
 
-<!-- ===== 工作经历 ===== -->
+<!-- ===== 经历 ===== -->
 <section id="experience">
   <h2 class="animate-on-scroll delay-0">Experience</h2>
   <div class="experience-list">
@@ -447,41 +487,44 @@ footer{text-align:center;padding:40px;color:#999;}
   </div>
 </section>
 
-<!-- ===== 项目作品 ===== -->
+<!-- ===== 项目 ===== -->
 <section id="projects">
   <h2 class="animate-on-scroll delay-0">Featured Projects</h2>
   <div class="project-grid">
-    <div class="project-card glass-box animate-on-scroll delay-0" onclick="this.classList.toggle('active')">
+    <div class="project-card glass-box animate-on-scroll delay-0" id="p1">
       <div class="project-cover"><img src="images/project1.jpg" alt="直播增长运营系统" loading="lazy" width="600" height="400" onerror="this.style.display='none';this.parentElement.innerHTML='📺 直播增长运营'"></div>
       <span>直播运营</span>
       <h3>直播增长运营系统</h3>
       <p>从账号定位、内容设计、直播运营到商业转化，打造完整增长体系。</p>
       <div class="project-number">¥100,000<br>最高月流水</div>
+      <span class="expand-toggle" onclick="event.stopPropagation();toggleDetail('p1')">📖 展开详情</span>
       <a href="project1.html" class="detail-btn">VIEW CASE →</a>
       <div class="project-detail"><h4>项目职责</h4><p>主播运营<br>直播策划<br>数据分析<br>用户增长</p><h4>成果</h4><p>单月最高流水10万元。</p></div>
     </div>
-    <div class="project-card glass-box animate-on-scroll delay-1" onclick="this.classList.toggle('active')">
+    <div class="project-card glass-box animate-on-scroll delay-1" id="p2">
       <div class="project-cover"><img src="images/project2.jpg" alt="海外直播生态运营" loading="lazy" width="600" height="400" onerror="this.style.display='none';this.parentElement.innerHTML='🌍 海外直播生态'"></div>
       <span>海外直播</span>
       <h3>海外直播生态运营</h3>
       <p>研究海外直播平台玩法，主播培养和用户增长。</p>
       <div class="project-number">GLOBAL<br>LIVE OPERATION</div>
+      <span class="expand-toggle" onclick="event.stopPropagation();toggleDetail('p2')">📖 展开详情</span>
       <a href="project2.html" class="detail-btn">VIEW CASE →</a>
       <div class="project-detail"><h4>平台</h4><p>Bigo Live</p><h4>能力</h4><p>主播管理<br>活动策划<br>直播运营<br>用户增长</p></div>
     </div>
-    <div class="project-card glass-box animate-on-scroll delay-2" onclick="this.classList.toggle('active')">
+    <div class="project-card glass-box animate-on-scroll delay-2" id="p3">
       <div class="project-cover"><img src="images/project3.jpg" alt="个人IP增长项目" loading="lazy" width="600" height="400" onerror="this.style.display='none';this.parentElement.innerHTML='🧠 个人IP增长'"></div>
       <span>个人IP</span>
       <h3>自媒体增长项目</h3>
       <p>从0开始打造账号，完成内容增长和粉丝积累。</p>
       <div class="project-number">55K+<br>粉丝</div>
+      <span class="expand-toggle" onclick="event.stopPropagation();toggleDetail('p3')">📖 展开详情</span>
       <a href="project3.html" class="detail-btn">VIEW CASE →</a>
       <div class="project-detail"><h4>负责内容</h4><p>账号定位<br>选题策划<br>视频制作<br>数据复盘</p><h4>成果</h4><p>2个月达到5.5万粉丝。</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 联系方式 ===== -->
+<!-- ===== 联系 ===== -->
 <section id="contact">
   <h2 class="animate-on-scroll delay-0">Contact</h2>
   <div class="contact-box glass-box animate-on-scroll delay-1">
@@ -494,7 +537,7 @@ footer{text-align:center;padding:40px;color:#999;}
 
 <footer class="animate-on-scroll delay-0">© 2026 Chen Portfolio</footer>
 
-<!-- ===== AI助手 ===== -->
+<!-- ===== AI ===== -->
 <button id="ai-btn">🤖 CHEN AI</button>
 <div id="ai-box">
   <div id="ai-head">🤖 CHEN AI</div>
@@ -511,9 +554,19 @@ footer{text-align:center;padding:40px;color:#999;}
 </div>
 
 <script>
-// ============================================================
-// 1. 进场动画（Intersection Observer — 高性能）
-// ============================================================
+// ===== 工具：展开详情 =====
+function toggleDetail(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('active');
+  const toggle = card.querySelector('.expand-toggle');
+  if (card.classList.contains('active')) {
+    toggle.textContent = '📕 收起详情';
+  } else {
+    toggle.textContent = '📖 展开详情';
+  }
+}
+
+// ===== 进场动画 =====
 const animateElements = document.querySelectorAll('.animate-on-scroll');
 const animationObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -528,26 +581,19 @@ animateElements.forEach(el => {
   }
 });
 
-// ============================================================
-// 2. 首屏背景头像 — 鼠标视差
-// ============================================================
-const bgAvatar = document.getElementById('bgAvatar');
+// ===== 头像视差 =====
 const bgImg = document.getElementById('bgAvatarImg');
-
 document.querySelector('.hero').addEventListener('mousemove', (e) => {
   const rect = document.querySelector('.hero').getBoundingClientRect();
   const x = (e.clientX - rect.left) / rect.width - 0.5;
   const y = (e.clientY - rect.top) / rect.height - 0.5;
   bgImg.style.transform = `scale(1.05) translate(${x * 20}px, ${y * 20}px)`;
 });
-
 document.querySelector('.hero').addEventListener('mouseleave', () => {
   bgImg.style.transform = 'scale(1.02) translate(0,0)';
 });
 
-// ============================================================
-// 3. 移动端菜单
-// ============================================================
+// ===== 移动端菜单 =====
 const mobileBtn = document.querySelector('.mobile-btn');
 const navMenu = document.querySelector('.nav nav');
 mobileBtn.addEventListener('click', function(e) {
@@ -562,9 +608,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ============================================================
-// 4. 数字滚动
-// ============================================================
+// ===== 数字滚动 =====
 function initNumberScroll(selector) {
   const numbers = document.querySelectorAll(selector);
   const observer = new IntersectionObserver((entries) => {
@@ -595,14 +639,13 @@ function initNumberScroll(selector) {
 }
 initNumberScroll('.num-count');
 
-// ============================================================
-// 5. AI助手
-// ============================================================
+// ===== AI助手 =====
 const aiBtn = document.getElementById('ai-btn');
 const aiBox = document.getElementById('ai-box');
 aiBtn.onclick = () => {
   const isOpen = aiBox.style.display === 'block';
   aiBox.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) setTimeout(() => document.getElementById('ai-text').focus(), 300);
 };
 
 function quickAsk(text) {
@@ -632,14 +675,13 @@ async function askESSPSEEK() {
   }
   chat.innerHTML += `<div class="msg">AI：${reply}</div>`;
   chat.scrollTop = chat.scrollHeight;
+  document.getElementById('ai-text').focus();
 }
 document.getElementById('ai-text').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') askESSPSEEK();
 });
 
-// ============================================================
-// 6. 复制电话
-// ============================================================
+// ===== 复制电话 =====
 function copyPhone() {
   navigator.clipboard.writeText('18198492700').then(() => {
     alert('✅ 号码已复制！');
@@ -654,26 +696,7 @@ function copyPhone() {
   });
 }
 
-// ============================================================
-// 7. 返回顶部按钮（带 requestAnimationFrame 节流）
-// ============================================================
-const topBtn = document.getElementById('topBtn');
-if (topBtn) {
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        topBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-}
-
-// ============================================================
-// 8. 封面图占位
-// ============================================================
+// ===== 封面图占位 =====
 document.querySelectorAll('.project-cover').forEach(cover => {
   if (!cover.querySelector('img')) {
     cover.style.background = '#2a2a2a';

@@ -7,8 +7,6 @@
 <title>直播增长运营系统 | 陈先生</title>
 <meta name="description" content="小陈的直播增长运营系统 — 从账号定位到商业转化，打造完整增长体系，单月最高流水10万元。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
-
-<!-- 预加载首屏背景图 -->
 <link rel="preload" as="image" href="images/project1.jpg" fetchpriority="high">
 
 <style>
@@ -155,7 +153,7 @@ p{font-size:17px;line-height:2;color:rgba(255,255,255,0.7);}
 
   <section class="hero">
     <div class="hero-bg">
-      <img src="images/project1.jpg" alt="直播增长运营系统" fetchpriority="high" width="1200" height="800">
+      <img src="images/project1.jpg" alt="直播增长运营系统" fetchpriority="high" width="1200" height="800" onerror="this.style.opacity='0'">
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-inner">
@@ -167,7 +165,7 @@ p{font-size:17px;line-height:2;color:rgba(255,255,255,0.7);}
         <span>主播管理</span>
       </div>
       <br>
-      <a class="back" href="index.html">← 返回首页</a>
+      <a class="back" href="index.html" onclick="event.preventDefault();window.location.href='index.html';">← 返回首页</a>
     </div>
   </section>
 
@@ -244,7 +242,6 @@ const numObserver = new IntersectionObserver((entries) => {
 }, {threshold:0.5});
 numbers.forEach(n => numObserver.observe(n));
 
-// 返回顶部按钮 — requestAnimationFrame 节流
 const topBtn = document.getElementById('topBtn');
 let ticking = false;
 window.addEventListener('scroll', () => {
